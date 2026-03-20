@@ -24,4 +24,4 @@ public class TrainConsistManagementApp {
         System.out.println("Final Ordered Consist: " + trainConsist);
         System.out.println("Final Bogie Count: " + trainConsist.size());
     }
-}git
+}
