@@ -1,55 +1,31 @@
-class CargoSafetyException extends RuntimeException {
-    public CargoSafetyException(String message) {
-        super(message);
-    }
-}
-
-class GoodsBogie {
-    String shape;
-    String cargo;
-
-    public GoodsBogie(String shape) {
-        this.shape = shape;
-    }
-
-    public void assignCargo(String cargo) {
-        try {
-            // Safety rule: Petroleum only allowed in Cylindrical bogies
-            if (cargo.equalsIgnoreCase("Petroleum") && !shape.equalsIgnoreCase("Cylindrical")) {
-                throw new CargoSafetyException(
-                        "Unsafe cargo assignment: Petroleum cannot be assigned to " + shape + " bogie");
-            }
-            this.cargo = cargo;
-            System.out.println("Cargo " + cargo + " assigned to " + shape + " bogie successfully.");
-        } catch (CargoSafetyException e) {
-            System.out.println("Error: " + e.getMessage());
-        } finally {
-            System.out.println("Cargo assignment validation completed for " + shape + " bogie.\n");
-        }
-    }
-
-    @Override
-    public String toString() {
-        return shape + " bogie carrying: " + (cargo != null ? cargo : "No cargo");
-    }
-}
-
-public class TrainConsistManagementApp {
+public class BubbleSortPassengerBogies {
     public static void main(String[] args) {
-        GoodsBogie b1 = new GoodsBogie("Cylindrical");
-        GoodsBogie b2 = new GoodsBogie("Rectangular");
+        int[] capacities = {72, 56, 24, 70, 60};
 
-        // Safe assignment
-        b1.assignCargo("Petroleum");
+        System.out.println("Original capacities:");
+        for (int cap : capacities) {
+            System.out.print(cap + " ");
+        }
+        System.out.println();
 
-        // Unsafe assignment
-        b2.assignCargo("Petroleum");
+        // Bubble Sort implementation
+        int n = capacities.length;
+        for (int i = 0; i < n - 1; i++) {
+            // Last i elements are already in place
+            for (int j = 0; j < n - i - 1; j++) {
+                if (capacities[j] > capacities[j + 1]) {
+                    // Swap capacities[j] and capacities[j+1]
+                    int temp = capacities[j];
+                    capacities[j] = capacities[j + 1];
+                    capacities[j + 1] = temp;
+                }
+            }
+        }
 
-        // Another safe assignment
-        b2.assignCargo("Coal");
-
-        // Display final status
-        System.out.println(b1);
-        System.out.println(b2);
+        System.out.println("Sorted capacities (ascending order):");
+        for (int cap : capacities) {
+            System.out.print(cap + " ");
+        }
+        System.out.println();
     }
 }
