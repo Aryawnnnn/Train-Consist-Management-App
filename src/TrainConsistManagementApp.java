@@ -2,47 +2,50 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 public class TrainConsistManagementApp {
+
     public static void main(String[] args) {
-        // Sorted array of bogie IDs
-        String[] bogieIDs = {"BG101", "BG205", "BG309", "BG412", "BG550"};
-        Arrays.sort(bogieIDs); // Ensure sorted for binary search
+        // Example: Bogie collection (can be empty to test UC20)
+        String[] bogieIDs = {}; // Empty array to simulate no bogies
 
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Sorted Bogie IDs:");
-        for (String id : bogieIDs) {
-            System.out.print(id + " ");
+
+        try {
+            System.out.println("Enter the Bogie ID to search:");
+            String searchKey = scanner.nextLine();
+
+            // Defensive check for empty train
+            checkTrainNotEmpty(bogieIDs);
+
+            // Example: choose linear search
+            boolean found = linearSearch(bogieIDs, searchKey);
+
+            if (found) {
+                System.out.println("Bogie ID " + searchKey + " exists in the train consist.");
+            } else {
+                System.out.println("Bogie ID " + searchKey + " was not found.");
+            }
+        } catch (IllegalStateException e) {
+            System.out.println("Error: " + e.getMessage());
+        } finally {
+            System.out.println("Search operation completed.");
+            scanner.close();
         }
-        System.out.println("\nEnter the Bogie ID to search:");
-        String searchKey = scanner.nextLine();
-
-        boolean found = binarySearch(bogieIDs, searchKey);
-
-        if (found) {
-            System.out.println("Bogie ID " + searchKey + " exists in the train consist.");
-        } else {
-            System.out.println("Bogie ID " + searchKey + " was not found.");
-        }
-
-        scanner.close();
     }
 
-    // Binary search method for strings
-    public static boolean binarySearch(String[] array, String key) {
-        int low = 0;
-        int high = array.length - 1;
+    // UC20: Defensive check
+    public static void checkTrainNotEmpty(String[] bogies) {
+        if (bogies == null || bogies.length == 0) {
+            throw new IllegalStateException("Cannot perform search: No bogies in the train.");
+        }
+    }
 
-        while (low <= high) {
-            int mid = low + (high - low) / 2;
-            int cmp = key.compareTo(array[mid]);
-
-            if (cmp == 0) {
-                return true; // Found
-            } else if (cmp < 0) {
-                high = mid - 1; // Search left half
-            } else {
-                low = mid + 1; // Search right half
+    // Linear search for demonstration
+    public static boolean linearSearch(String[] array, String key) {
+        for (String id : array) {
+            if (id.equals(key)) {
+                return true;
             }
         }
-        return false; // Not found
+        return false;
     }
 }
