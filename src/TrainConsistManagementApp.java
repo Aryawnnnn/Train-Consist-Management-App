@@ -1,16 +1,33 @@
-import java.util.Arrays;
+import java.util.Scanner;
 
 public class TrainConsistManagementApp {
     public static void main(String[] args) {
-        String[] bogieNames = {"Sleeper", "AC Chair", "First Class", "General", "Luxury"};
+        // Array of bogie IDs (unsorted)
+        String[] bogieIDs = {"BG101", "BG205", "BG309", "BG412", "BG550"};
 
-        System.out.println("Original bogie names:");
-        System.out.println(Arrays.toString(bogieNames));
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Available Bogie IDs:");
+        for (String id : bogieIDs) {
+            System.out.print(id + " ");
+        }
+        System.out.println("\nEnter the Bogie ID to search:");
+        String searchKey = scanner.nextLine();
 
-        // Sorting using built-in Arrays.sort()
-        Arrays.sort(bogieNames);
+        boolean found = false;
+        // Linear search
+        for (String id : bogieIDs) {
+            if (id.equals(searchKey)) {
+                found = true;
+                break; // stop at first match
+            }
+        }
 
-        System.out.println("Sorted bogie names (alphabetical order):");
-        System.out.println(Arrays.toString(bogieNames));
+        if (found) {
+            System.out.println("Bogie ID " + searchKey + " exists in the train consist.");
+        } else {
+            System.out.println("Bogie ID " + searchKey + " was not found.");
+        }
+
+        scanner.close();
     }
 }
