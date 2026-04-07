@@ -1,23 +1,41 @@
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+
+class Bogie {
+    String name;
+    int capacity;
+
+    public Bogie(String name, int capacity) {
+        this.name = name;
+        this.capacity = capacity;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getCapacity() {
+        return capacity;
+    }
+
+    @Override
+    public String toString() {
+        return name + " - Capacity: " + capacity;
+    }
+}
 
 public class TrainConsistManagementApp {
-
     public static void main(String[] args) {
-        System.out.println("=== Train Consist Management App ===");
+        List<Bogie> bogies = new ArrayList<>();
 
-        Map<String, Integer> bogieCapacities = new HashMap<>();
+        bogies.add(new Bogie("Sleeper", 72));
+        bogies.add(new Bogie("AC Chair", 56));
+        bogies.add(new Bogie("First Class", 24));
 
-        bogieCapacities.put("Sleeper", 72);
-        bogieCapacities.put("AC Chair", 56);
-        bogieCapacities.put("First Class", 24);
+        bogies.sort(Comparator.comparingInt(Bogie::getCapacity));
 
-        System.out.println("Bogie Capacity Mapping:");
-
-        for (Map.Entry<String, Integer> entry : bogieCapacities.entrySet()) {
-            System.out.println("Bogie: " + entry.getKey() + " | Capacity: " + entry.getValue());
+        System.out.println("Bogies sorted by capacity (ascending):");
+        for (Bogie b : bogies) {
+            System.out.println(b);
         }
-
-        System.out.println("Total Bogie Types Tracked: " + bogieCapacities.size());
     }
 }
